@@ -17,7 +17,7 @@ import SearchBar from "./components/SearchBar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from "./pages/Verify";
-
+import AuthWrapper from './pages/AuthWrapper';
 const App = () => {
  
   useEffect(() => {
@@ -38,10 +38,19 @@ const App = () => {
     <Navbar/>
     <SearchBar/>
   <Routes>
+  <Route path="/" element={
+        <AuthWrapper>
+          <Home />
+        </AuthWrapper>
+      }/> 
+      <Route path="/collection" element={
+        <AuthWrapper>
+          <Collection />
+        </AuthWrapper>
+      }/>
   <Route path="/" element={<Home/>}/>
   <Route path="/cart" element={<Cart/>}/>
   <Route path="/about" element={<About/>}/>
-  <Route path="/collection" element={<Collection/>}/>
   <Route path="/contact" element={<Contact/>}/>
   <Route path="/login" element={<Login/>}/>
   <Route path="/orders" element={<Orders/>}/>
