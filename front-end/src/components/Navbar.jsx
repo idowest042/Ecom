@@ -28,7 +28,7 @@ toast.error(error.response.data.message)
 
       {/* Desktop Links (hidden on mobile) */}
       <div className="hidden lg:flex gap-8">
-        <NavLink to="/" data-aos="slide-left">Home</NavLink>
+        <NavLink to="/" >Home</NavLink>
         <NavLink to="/contact" data-aos="slide-left" data-aos-delay="100">Contact</NavLink>
         <NavLink to="/about" data-aos="slide-left" data-aos-delay="200">About</NavLink>
         <NavLink to="/collection" data-aos="slide-left" data-aos-delay="300">Collection</NavLink>
