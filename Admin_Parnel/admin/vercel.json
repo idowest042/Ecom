@@ -1,11 +1,8 @@
-{
-    "headers": [
+  {
+    "rewrites": [
       {
-        "source": "/api/(.*)",
-        "headers": [
-          { "key": "Access-Control-Allow-Origin", "value": "https://adminparnel.vercel.app" },
-          { "key": "Access-Control-Allow-Credentials", "value": "true" }
-        ]
+        "source": "/(.*)",
+        "destination": "/"
       }
     ]
   }
