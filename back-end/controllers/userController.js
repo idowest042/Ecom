@@ -62,25 +62,35 @@ export const registerUser = async (req,res) => {
         console.log(error)
     }
 }
-export const adminLogin = async(req,res)=>{
-try {
-    const {email,password} = req.body
-    if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
-      // ✅ Correct (payload is an object)
+export const adminLogin = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      // 1. Validate credentials
+      if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) {
+        return res.status(401).json({ msg: "Invalid credentials" }); // 401 for unauthorized
+      }
+  
+      // 2. Generate token
       const token = jwt.sign(
-        { 
-          email: process.env.ADMIN_EMAIL.trim(), // Trim to be safe
-          role: "admin" 
-        },
+        { email: email.trim(), role: "admin" },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-        res.status(200).json({token})}
-        else{
-            res.status(400).json({msg:"Invalid credentials"})
-        }
-} catch (error) {
-    console.log('error in adminLogin',error)
-    res.status(500).json({msg:"error in adminLogin"})
-}
-}
+  
+      // 3. Set secure cookie (for cross-domain)
+      res.cookie('adminToken', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        maxAge: 3600000 // 1 hour
+      });
+  
+      // 4. Respond with token
+      res.status(200).json({ token });
+  
+    } catch (error) {
+      console.error('Admin login error:', error);
+      res.status(500).json({ msg: "Authentication failed" });
+    }
+  };
