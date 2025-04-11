@@ -14,7 +14,15 @@ connectDB()
 connectCloudinary()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
-app.use(cors())
+app.use(cors({
+  origin: [
+    "http://localhost:5173",  
+      "http://localhost:5174",       // Local development
+    "https://adminparnel.vercel.app",  // Admin panel
+    "https://rattleecommercestore.vercel.app/login" // Main frontend
+],
+    credentials: true                 
+}));
 app.use('/api/user', userRouter)
 app.use('/api/product', productRouter)
 app.use('/api/cart', cartRouter)
